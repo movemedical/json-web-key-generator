@@ -10,6 +10,7 @@ import java.io.Writer;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Security;
@@ -18,12 +19,7 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.commons.cli.CommandLine;
@@ -428,10 +424,16 @@ public class Launcher {
 		if (keySet) {
 			JWKSet jwkSet = new JWKSet(jwk);
 			JsonElement json = JsonParser.parseString(jwkSet.toJSONObject(false).toJSONString());
+            String base64 = Base64.getEncoder().encodeToString(gson.toJson(json).getBytes(StandardCharsets.UTF_8));
 			System.out.println(gson.toJson(json));
+            System.out.println("\nBase64:");
+            System.out.println(base64);
 		} else {
 			JsonElement json = JsonParser.parseString(jwk.toJSONString());
+            String base64 = Base64.getEncoder().encodeToString(gson.toJson(json).getBytes(StandardCharsets.UTF_8));
 			System.out.println(gson.toJson(json));
+            System.out.println("\nBase64:");
+            System.out.println(base64);
 		}
 	}
 
